@@ -1,0 +1,819 @@
+/* src/index.css */
+/* Crystal Ball Revenue Analytics — Full Design System v2 */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE DESIGN TOKENS (default)
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Backgrounds */
+  --bg-app:          #F0F4F8;
+  --bg-surface:      #FFFFFF;
+  --bg-card:         #FFFFFF;
+  --bg-muted:        #F8FAFC;
+  --bg-muted-2:      #F1F5F9;
+  --bg-hover:        #EFF6FF;
+  --bg-nav:          linear-gradient(135deg, #1E3A5F 0%, #0F2744 100%);
+
+  /* Borders */
+  --border:          #E2E8F0;
+  --border-subtle:   #F1F5F9;
+  --border-strong:   #CBD5E1;
+  --border-focus:    #3B82F6;
+
+  /* Text */
+  --text-primary:    #0F172A;
+  --text-secondary:  #475569;
+  --text-muted:      #94A3B8;
+  --text-nav:        #FFFFFF;
+
+  /* Accents */
+  --accent-navy:     #1E3A5F;
+  --accent-blue:     #2563EB;
+  --accent-teal:     #0891B2;
+  --success:         #059669;
+  --success-bg:      #D1FAE5;
+  --success-border:  #A7F3D0;
+  --warning:         #D97706;
+  --warning-bg:      #FEF3C7;
+  --warning-border:  #FDE68A;
+  --danger:          #DC2626;
+  --danger-bg:       #FEE2E2;
+  --danger-border:   #FECACA;
+
+  /* Table */
+  --table-header:    #F1F5F9;
+  --table-stripe:    #FAFBFC;
+  --table-hover:     #EFF6FF;
+  --table-border:    #E2E8F0;
+  --table-total-bg:  #F1F5F9;
+
+  /* Shadows */
+  --shadow-xs:       0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm:       0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:       0 4px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-lg:       0 8px 24px rgba(0,0,0,0.09), 0 2px 6px rgba(0,0,0,0.05);
+  --shadow-glow:     0 0 0 3px rgba(37, 99, 235, 0.12);
+
+  /* KPI Card colored borders per semantic type */
+  --kpi-primary-top:  #2563EB;
+  --kpi-pos-top:      #059669;
+  --kpi-neg-top:      #DC2626;
+  --kpi-warn-top:     #D97706;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK MODE DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-app:          #0A1628;
+  --bg-surface:      #111D35;
+  --bg-card:         #162040;
+  --bg-muted:        #1A2540;
+  --bg-muted-2:      #1E2D4A;
+  --bg-hover:        rgba(59, 130, 246, 0.08);
+  --bg-nav:          linear-gradient(135deg, #0D1E3A 0%, #070F1E 100%);
+
+  /* Borders */
+  --border:          rgba(255,255,255,0.08);
+  --border-subtle:   rgba(255,255,255,0.04);
+  --border-strong:   rgba(255,255,255,0.14);
+  --border-focus:    #3B82F6;
+
+  /* Text */
+  --text-primary:    #E2E8F0;
+  --text-secondary:  #94A3B8;
+  --text-muted:      #475569;
+  --text-nav:        #FFFFFF;
+
+  /* Accents unchanged — same blue palette works on dark bg */
+
+  /* Semantic colors — slightly brighter for dark bg readability */
+  --success:         #10B981;
+  --success-bg:      rgba(16, 185, 129, 0.12);
+  --success-border:  rgba(16, 185, 129, 0.25);
+  --warning:         #F59E0B;
+  --warning-bg:      rgba(245, 158, 11, 0.12);
+  --warning-border:  rgba(245, 158, 11, 0.25);
+  --danger:          #EF4444;
+  --danger-bg:       rgba(239, 68, 68, 0.12);
+  --danger-border:   rgba(239, 68, 68, 0.25);
+
+  /* Table */
+  --table-header:    #1A2540;
+  --table-stripe:    rgba(255,255,255,0.015);
+  --table-hover:     rgba(59, 130, 246, 0.07);
+  --table-border:    rgba(255,255,255,0.06);
+  --table-total-bg:  #1A2540;
+
+  /* Shadows get deeper in dark mode */
+  --shadow-xs:       0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sm:       0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md:       0 4px 8px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+  --shadow-lg:       0 8px 24px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-glow:     0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE RESETS
+   ═══════════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════════════════════ */
+.app-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.page-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.section-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.kpi-value {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.kpi-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARDS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.15s ease;
+}
+
+.card-padded {
+  padding: 20px 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KPI CARDS — Semantic Top Border
+   ═══════════════════════════════════════════════════════════════════════════ */
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background-color 0.25s ease;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--kpi-top-color, var(--kpi-primary-top));
+  border-radius: 12px 12px 0 0;
+}
+
+.kpi-card.kpi-primary::before  { --kpi-top-color: var(--accent-blue); }
+.kpi-card.kpi-positive::before { --kpi-top-color: var(--success); }
+.kpi-card.kpi-negative::before { --kpi-top-color: var(--danger); }
+.kpi-card.kpi-warning::before  { --kpi-top-color: var(--warning); }
+
+.kpi-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DATA TABLES — Enhanced
+   ═══════════════════════════════════════════════════════════════════════════ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.data-table thead th {
+  background: var(--table-header);
+  padding: 9px 12px;
+  text-align: right;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border-strong);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  transition: background-color 0.25s ease;
+}
+
+.data-table thead th:first-child {
+  text-align: left;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--table-header);
+}
+
+.data-table thead th.th-period-group {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+/* Per-period group header color accent */
+.th-fy23 { border-top: 3px solid #6366F1; }
+.th-fy24 { border-top: 3px solid #0891B2; }
+.th-fy25 { border-top: 3px solid #2563EB; }
+.th-fy26 { border-top: 3px solid #059669; }
+.th-fy27 { border-top: 3px solid #D97706; }
+.th-q1   { border-top: 3px solid #3B82F6; }
+.th-q2   { border-top: 3px solid #14B8A6; }
+.th-q3   { border-top: 3px solid #F59E0B; }
+.th-q4   { border-top: 3px solid #8B5CF6; }
+
+.data-table tbody tr {
+  border-bottom: 1px solid var(--table-border);
+  transition: background-color 0.1s ease;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: var(--table-stripe);
+}
+
+.data-table tbody tr:hover {
+  background-color: var(--table-hover);
+}
+
+.data-table tbody tr.totals-row {
+  background: var(--table-total-bg);
+  font-weight: 700;
+  border-top: 2px solid var(--border-strong);
+  color: var(--text-primary);
+}
+
+.data-table td {
+  padding: 8px 12px;
+  white-space: nowrap;
+  text-align: right;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table td:first-child {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  position: sticky;
+  left: 0;
+  background: inherit;
+  z-index: 1;
+  min-width: 150px;
+}
+
+/* ─── In-cell Mini Progress Bar ─────────────────────────────────────────── */
+.mini-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.mini-bar-track {
+  width: 48px;
+  height: 5px;
+  background: var(--bg-muted-2);
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mini-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* ─── Heatmap gap cells ──────────────────────────────────────────────────── */
+.gap-cell-pos {
+  background: var(--success-bg);
+  color: var(--success);
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.gap-cell-neg {
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NAVIGATION TABS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.tab-bar {
+  display: flex;
+  gap: 2px;
+  background: rgba(255,255,255,0.1);
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.tab-item {
+  padding: 7px 16px;
+  border-radius: 7px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  position: relative;
+}
+
+.tab-item:hover {
+  color: #FFFFFF;
+  background: rgba(255,255,255,0.1);
+}
+
+.tab-item.active {
+  background: #FFFFFF;
+  color: var(--accent-navy);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+}
+
+/* Colored accent indicator below active tab */
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 50%;
+  transform: translateX(-50%);
+  width: 20px; height: 2px;
+  border-radius: 2px;
+  background: var(--tab-accent, #2563EB);
+}
+
+.tab-item[data-tab="annual"].active::after    { --tab-accent: #3B82F6; }
+.tab-item[data-tab="aop"].active::after       { --tab-accent: #14B8A6; }
+.tab-item[data-tab="curqtr"].active::after    { --tab-accent: #F59E0B; }
+.tab-item[data-tab="weekly"].active::after    { --tab-accent: #8B5CF6; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FILTER BAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+.filter-bar {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.25s ease;
+}
+
+.filter-select {
+  appearance: none;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 7px 28px 7px 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  min-width: 120px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.25s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-glow);
+}
+
+.filter-select:hover {
+  border-color: var(--border-focus);
+}
+
+/* ─── Pill filters ───────────────────────────────────────────────────────── */
+.pill-group {
+  display: flex;
+  gap: 4px;
+}
+
+.pill {
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-muted);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.pill:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  background: var(--bg-hover);
+}
+
+.pill.active {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DELTA BADGES & INLINE COLORS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.delta-positive {
+  color: var(--success);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.delta-negative {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.delta-neutral {
+  color: var(--warning);
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* Inline table delta (no badge) */
+.pos  { color: var(--success); font-weight: 700; }
+.neg  { color: var(--danger); font-weight: 700; }
+.warn { color: var(--warning); font-weight: 700; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INSIGHT STRIP
+   ═══════════════════════════════════════════════════════════════════════════ */
+.insight-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.insight-positive {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: var(--success-border);
+}
+.insight-negative  {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+.insight-warning   {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-color: var(--warning-border);
+}
+.insight-neutral   {
+  background: var(--bg-hover);
+  color: var(--accent-blue);
+  border-color: rgba(37,99,235,0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION TITLE WITH ACCENT BAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+.section-title-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.section-title-bar::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--section-accent, var(--accent-blue));
+  flex-shrink: 0;
+}
+
+/* View-specific accent colors */
+.annual-accent        { --section-accent: #3B82F6; }
+.aop-accent           { --section-accent: #14B8A6; }
+.curqtr-accent        { --section-accent: #F59E0B; }
+.weekly-accent        { --section-accent: #8B5CF6; }
+/* Finance module accents */
+.finance-margin-accent { --section-accent: #10B981; }
+.finance-bta-accent    { --section-accent: #0EA5E9; }
+/* Sales module accent */
+.sales-accent          { --section-accent: #F97316; }
+/* DEG module accent */
+.deg-accent            { --section-accent: #0D9488; }
+
+/* ─── Table Toolbar (search row + export) ───────────────────────────────── */
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.table-search {
+  flex: 1;
+  min-width: 160px;
+  max-width: 320px;
+  padding: 7px 10px 7px 34px;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  transition: border-color 0.15s ease;
+}
+
+.table-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.table-search-wrap svg {
+  position: absolute;
+  left: 10px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.table-search:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-muted);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.export-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-focus);
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EMPTY STATE
+   ═══════════════════════════════════════════════════════════════════════════ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRESENTATION MODE
+   ═══════════════════════════════════════════════════════════════════════════ */
+.presentation-mode .filter-bar,
+.presentation-mode .nav-home-btn {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TRANSITIONS & ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.fade-in {
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.75); }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+/* Theme transition — smooth everywhere */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Exceptions: don't animate transforms, shadows (they should be instant for interactions) */
+.kpi-card, .card, button {
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease,
+              box-shadow 0.15s ease,
+              transform 0.15s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME TOGGLE BUTTON
+   ═══════════════════════════════════════════════════════════════════════════ */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.2);
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TABLE TOOLBAR (search + export)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 10px;
+  gap: 8px;
+}
+
+.table-search {
+  appearance: none;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 6px 12px 6px 32px;   /* left = 32px to clear the icon */
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  width: 220px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.table-search::placeholder { color: var(--text-muted); }
+
+.table-search:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-glow);
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-strong);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.export-btn:hover {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #FFFFFF;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .kpi-value { font-size: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+  .kpi-value { font-size: 1.25rem; }
+  .tab-item { padding: 5px 10px; font-size: 0.75rem; }
+}
