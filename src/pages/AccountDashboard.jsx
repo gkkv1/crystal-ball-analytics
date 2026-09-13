@@ -4,7 +4,7 @@
 // Reuses the application design system, header, navigation, and theme tokens.
 
 import { useState, Suspense } from 'react';
-import { Home, LineChart, Users } from 'lucide-react';
+import { LineChart, Users } from 'lucide-react';
 import clsx from 'clsx';
 
 import Header from '../components/layout/Header.jsx';
@@ -17,7 +17,7 @@ const ACCOUNT_TABS = [
   { id: 'client-visit', label: 'Client Visit',          icon: Users,     accent: '#06B6D4' },
 ];
 
-function AccountTabNav({ activeTab, onTabChange, onHome }) {
+function AccountTabNav({ activeTab, onTabChange }) {
   return (
     <div
       className="flex items-center px-6 py-2.5 shrink-0 gap-4"
@@ -27,30 +27,6 @@ function AccountTabNav({ activeTab, onTabChange, onHome }) {
         boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
       }}
     >
-      {/* Home return button */}
-      <button
-        onClick={onHome}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 5,
-          color: 'rgba(255,255,255,0.6)',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: '0.75rem',
-          fontWeight: 600,
-          padding: '4px 12px 4px 0',
-          borderRight: '1px solid rgba(255,255,255,0.12)',
-          transition: 'color 0.15s ease',
-        }}
-        onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
-      >
-        <Home style={{ width: 13, height: 13 }} />
-        Home
-      </button>
-
       {/* Two tabs */}
       <div className="flex items-center gap-1.5">
         {ACCOUNT_TABS.map(({ id, label, icon: Icon, accent }) => {
@@ -109,7 +85,6 @@ export default function AccountDashboard({ onNavigate }) {
         <AccountTabNav
           activeTab={activeTab}
           onTabChange={setActiveTab}
-          onHome={() => onNavigate('landing')}
         />
 
         {/* Tab Content View */}

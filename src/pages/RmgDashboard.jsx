@@ -4,7 +4,7 @@
 
 import { useMemo, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
-import { RotateCcw, Filter, Home, Download, Search, Users, TrendingUp, Calendar } from 'lucide-react';
+import { RotateCcw, Filter, Download, Search, Users, TrendingUp, Calendar } from 'lucide-react';
 import clsx from 'clsx';
 
 import { RmgFilterProvider, useRmgFilters } from '../context/RmgFilterContext.jsx';
@@ -20,6 +20,8 @@ import { useChartTheme } from '../hooks/useChartTheme.js';
 import Header from '../components/layout/Header.jsx';
 import SectionTitle from '../components/common/SectionTitle.jsx';
 import EmptyState from '../components/common/EmptyState.jsx';
+import ChartCard from '../components/customReport/ChartCard.jsx';
+import { RMG_TREND_META, RMG_CLUSTER_TREND_META, RMG_SUBUNIT_TREND_META } from '../components/customReport/metadata/rmgMeta.js';
 
 const ACC = 'rmg-accent';
 const fn = v => (v != null ? Number(v).toLocaleString() : '0');
@@ -532,17 +534,9 @@ function RmgContent() {
         {/* ── Top Section: WON HC Trend (75%) + KPIs (25%) ── */}
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
           {/* Main Trend Bar Chart */}
-          <div className="xl:col-span-8 2xl:col-span-9 card card-padded flex flex-col">
-            <div className="flex items-center justify-between mb-2">
-              <SectionTitle accent={ACC}>WON HC Trend</SectionTitle>
-              <span className="text-2xs text-slate-400 font-semibold uppercase tracking-wider">
-                Weekly Headcount Additions
-              </span>
-            </div>
-            <div style={{ height: 260 }}>
-              <WonHCTrendChart data={wonHCTrend} />
-            </div>
-          </div>
+          <ChartCard title="WON HC Trend" accent={ACC} chartMeta={RMG_TREND_META} data={wonHCTrend} height={260} className="xl:col-span-8 2xl:col-span-9 flex flex-col">
+            <WonHCTrendChart data={wonHCTrend} />
+          </ChartCard>
 
           {/* Right Column: Key Metric KPI Cards */}
           <div className="xl:col-span-4 2xl:col-span-3 flex flex-col gap-4 justify-between">
@@ -591,30 +585,14 @@ function RmgContent() {
         </div>
 
         {/* ── Mid Section 1: BG Cluster Wise WON HC Trend ── */}
-        <div className="card card-padded">
-          <div className="flex items-center justify-between mb-2">
-            <SectionTitle accent={ACC}>BG Cluster Wise WON HC Trend</SectionTitle>
-            <span className="text-2xs text-slate-400 font-semibold uppercase tracking-wider">
-              Cluster Multi-Week Trajectory
-            </span>
-          </div>
-          <div style={{ height: 260 }}>
-            <BgClusterTrendChart data={clusterTrend} />
-          </div>
-        </div>
+        <ChartCard title="BG Cluster Wise WON HC Trend" accent={ACC} chartMeta={RMG_CLUSTER_TREND_META} data={filteredData} height={260}>
+          <BgClusterTrendChart data={clusterTrend} />
+        </ChartCard>
 
         {/* ── Mid Section 2: Sub Unit Wise WON HC Trend ── */}
-        <div className="card card-padded">
-          <div className="flex items-center justify-between mb-2">
-            <SectionTitle accent={ACC}>Sub Unit Wise WON HC Trend</SectionTitle>
-            <span className="text-2xs text-slate-400 font-semibold uppercase tracking-wider">
-              Top Sub-Units Comparison
-            </span>
-          </div>
-          <div style={{ height: 260 }}>
-            <SubUnitTrendChart data={subUnitTrend} />
-          </div>
-        </div>
+        <ChartCard title="Sub Unit Wise WON HC Trend" accent={ACC} chartMeta={RMG_SUBUNIT_TREND_META} data={filteredData} height={260}>
+          <SubUnitTrendChart data={subUnitTrend} />
+        </ChartCard>
 
         {/* ── Bottom Section 1: BG Cluster WON HC Table ── */}
         <div className="card card-padded">
@@ -670,30 +648,6 @@ export default function RmgDashboard({ onNavigate }) {
             boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
           }}
         >
-          <button
-            onClick={() => onNavigate('landing')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 5,
-              color: 'rgba(255,255,255,0.6)',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              padding: '12px 12px 12px 0',
-              borderRight: '1px solid rgba(255,255,255,0.1)',
-              marginRight: 8,
-              transition: 'color 0.15s ease',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
-          >
-            <Home style={{ width: 13, height: 13 }} />
-            Home
-          </button>
-
           {/* Active View Badge: WON-HC Report */}
           <div
             style={{

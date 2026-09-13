@@ -4,7 +4,7 @@
 
 import { Fragment, useMemo, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
-import { RotateCcw, Filter, Home, ChevronDown, ChevronRight, Download } from 'lucide-react';
+import { RotateCcw, Filter, ChevronDown, ChevronRight, Download } from 'lucide-react';
 import clsx from 'clsx';
 
 import { DegFilterProvider, useDegFilters } from '../context/DegFilterContext.jsx';
@@ -16,6 +16,9 @@ import Header from '../components/layout/Header.jsx';
 import KPICard from '../components/kpi/KPICard.jsx';
 import SectionTitle from '../components/common/SectionTitle.jsx';
 import EmptyState from '../components/common/EmptyState.jsx';
+import ChartCard from '../components/customReport/ChartCard.jsx';
+import { DEG_CSI_TREND_META, DEG_CSI_PROJECT_META, DEG_CSI_SUBUNIT_META } from '../components/customReport/metadata/degMeta.js';
+
 
 const ACC = 'deg-accent';
 const f1  = v => (v != null ? `${Number(v).toFixed(1)}%` : '—');
@@ -415,27 +418,18 @@ function DegContent() {
 
         {/* ── Row 1: CSI % Trend + Total vs 100% CSI ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <div className="card card-padded">
-            <SectionTitle accent={ACC}>CSI% Trend across Periods</SectionTitle>
-            <div style={{ height: 280 }}>
-              <CsiTrendChart data={csiTrend} />
-            </div>
-          </div>
-          <div className="card card-padded">
-            <SectionTitle accent={ACC}>Total Projects vs 100% CSI by Period</SectionTitle>
-            <div style={{ height: 280 }}>
-              <CsiProjectChart data={csiTrend} />
-            </div>
-          </div>
+          <ChartCard title="CSI% Trend across Periods" accent={ACC} chartMeta={DEG_CSI_TREND_META} data={filteredData} height={280}>
+            <CsiTrendChart data={csiTrend} />
+          </ChartCard>
+          <ChartCard title="Total Projects vs 100% CSI by Period" accent={ACC} chartMeta={DEG_CSI_PROJECT_META} data={filteredData} height={280}>
+            <CsiProjectChart data={csiTrend} />
+          </ChartCard>
         </div>
 
         {/* ── Row 2: CSI% by Sub Unit ── */}
-        <div className="card card-padded">
-          <SectionTitle accent={ACC}>CSI% Trend by Sub Unit (Top 6)</SectionTitle>
-          <div style={{ height: 300 }}>
-            <CsiSubUnitChart data={suData} />
-          </div>
-        </div>
+        <ChartCard title="CSI% Trend by Sub Unit (Top 6)" accent={ACC} chartMeta={DEG_CSI_SUBUNIT_META} data={filteredData} height={300}>
+          <CsiSubUnitChart data={suData} />
+        </ChartCard>
 
         {/* ── CSI Table ── */}
         <div className="card card-padded">
@@ -473,23 +467,6 @@ export default function DegDashboard({ onNavigate }) {
           flexShrink: 0,
           boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
         }}>
-          <button
-            onClick={() => onNavigate('landing')}
-            style={{
-              display: 'flex', alignItems: 'center', gap: 5,
-              color: 'rgba(255,255,255,0.6)', background: 'none',
-              border: 'none', cursor: 'pointer', fontSize: '0.75rem',
-              fontWeight: 600, padding: '12px 12px 12px 0',
-              borderRight: '1px solid rgba(255,255,255,0.1)',
-              marginRight: 8, transition: 'color 0.15s ease',
-            }}
-            onMouseEnter={e => e.currentTarget.style.color = '#fff'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
-          >
-            <Home style={{ width: 13, height: 13 }} />
-            Home
-          </button>
-
           <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#FFFFFF' }}>
             DEG Performance Dashboard
           </span>

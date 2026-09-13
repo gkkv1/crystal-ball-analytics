@@ -9,6 +9,7 @@ import {
   getClusterBreakdown,
   getGeoBreakdown,
   getAccountBreakdown,
+  getWeeklyPerformance,
 } from '../utils/calculations.js';
 import FilterBar from '../components/layout/FilterBar.jsx';
 import KPICard from '../components/kpi/KPICard.jsx';
@@ -20,6 +21,8 @@ import EmptyState from '../components/common/EmptyState.jsx';
 import { formatNumber, formatPct, getDeltaClass } from '../utils/formatters.js';
 import { Download } from 'lucide-react';
 import clsx from 'clsx';
+import ChartCard from '../components/customReport/ChartCard.jsx';
+import { REVENUE_WEEKLY_META } from '../components/customReport/metadata/revenueMeta.js';
 
 const ACCENT = 'weekly-accent';
 
@@ -170,6 +173,11 @@ export default function WeeklyTrendAnalysis() {
     [allData, filters]
   );
 
+  const weeklyPerfData = useMemo(
+    () => getWeeklyPerformance(allData, filters),
+    [allData, filters]
+  );
+
   return (
     <div className="flex flex-col gap-5 p-5 fade-in overflow-auto">
       <FilterBar showQuarter={true} showFY={true} />
@@ -186,12 +194,9 @@ export default function WeeklyTrendAnalysis() {
       ) : <EmptyState message="No data for selected filters." />}
 
       {/* Weekly Run-Rate chart */}
-      <div className="card card-padded">
-        <SectionTitle accent={ACCENT}>Projected, Quarterly Target and AOP by Week Number</SectionTitle>
-        <div style={{ height: 340 }}>
-          <WeeklyRunRateChart />
-        </div>
-      </div>
+      <ChartCard title="Projected, Quarterly Target and AOP by Week Number" accent={ACCENT} chartMeta={REVENUE_WEEKLY_META} data={weeklyPerfData} height={340}>
+        <WeeklyRunRateChart />
+      </ChartCard>
 
       {/* Gap Summary Strip */}
       <GapSummaryStrip kpis={kpis} />

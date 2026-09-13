@@ -18,6 +18,8 @@ import EmptyState from '../components/common/EmptyState.jsx';
 import { formatPct } from '../utils/formatters.js';
 import ReactECharts from 'echarts-for-react';
 import { useChartTheme } from '../hooks/useChartTheme.js';
+import ChartCard from '../components/customReport/ChartCard.jsx';
+import { REVENUE_AOP_QTR_META, REVENUE_CUR_QTR_META } from '../components/customReport/metadata/revenueMeta.js';
 
 // AOP% and QoQ% dual-line per quarter
 function AOPQuarterlyTrendChart({ data }) {
@@ -115,18 +117,12 @@ export default function AOPPerformance() {
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>Quarterly Performance — AOP vs Actual</SectionTitle>
-          <div style={{ height: 260 }}>
-            <CurQtrCompareChart />
-          </div>
-        </div>
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>Quarterly AOP% &amp; QoQ% Trend</SectionTitle>
-          <div style={{ height: 260 }}>
-            <AOPQuarterlyTrendChart data={qtrData} />
-          </div>
-        </div>
+        <ChartCard title="Quarterly Performance — AOP vs Actual" accent={ACCENT} chartMeta={REVENUE_CUR_QTR_META} data={qtrData} height={260}>
+          <CurQtrCompareChart />
+        </ChartCard>
+        <ChartCard title="Quarterly AOP% &amp; QoQ% Trend" accent={ACCENT} chartMeta={REVENUE_AOP_QTR_META} data={qtrData} height={260}>
+          <AOPQuarterlyTrendChart data={qtrData} />
+        </ChartCard>
       </div>
 
       {/* Cluster Wise AOP */}

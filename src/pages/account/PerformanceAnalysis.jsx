@@ -20,6 +20,8 @@ import { useChartTheme } from '../../hooks/useChartTheme.js';
 import KPICard from '../../components/kpi/KPICard.jsx';
 import SectionTitle from '../../components/common/SectionTitle.jsx';
 import EmptyState from '../../components/common/EmptyState.jsx';
+import ChartCard from '../../components/customReport/ChartCard.jsx';
+import { ACCOUNT_FY_META, ACCOUNT_AOP_YOY_META, ACCOUNT_QUARTERLY_META } from '../../components/customReport/metadata/accountMeta.js';
 
 const ACC = 'account-accent';
 const fn = v => (v != null ? Number(v).toLocaleString() : '0');
@@ -387,34 +389,19 @@ export default function PerformanceAnalysis() {
 
         {/* ─── Top Charts: FY Performance & AOP YoY ─── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <div className="card card-padded">
-            <SectionTitle accent={ACC}>
-              FY Performance — {activeDomain.label}
-            </SectionTitle>
-            <div style={{ height: 260 }}>
-              <ReactECharts option={fyOption} style={{ height: '100%', width: '100%' }} />
-            </div>
-          </div>
+          <ChartCard title={`FY Performance — ${activeDomain.label}`} accent={ACC} chartMeta={ACCOUNT_FY_META} data={fyData} height={260}>
+            <ReactECharts option={fyOption} style={{ height: '100%', width: '100%' }} />
+          </ChartCard>
 
-          <div className="card card-padded">
-            <SectionTitle accent={ACC}>
-              AOP YoY Performance — {activeDomain.label}
-            </SectionTitle>
-            <div style={{ height: 260 }}>
-              <ReactECharts option={aopYoYOption} style={{ height: '100%', width: '100%' }} />
-            </div>
-          </div>
+          <ChartCard title={`AOP YoY Performance — ${activeDomain.label}`} accent={ACC} chartMeta={ACCOUNT_AOP_YOY_META} data={aopYoYData} height={260}>
+            <ReactECharts option={aopYoYOption} style={{ height: '100%', width: '100%' }} />
+          </ChartCard>
         </div>
 
         {/* ─── Middle Chart: Quarterly Performance ─── */}
-        <div className="card card-padded">
-          <SectionTitle accent={ACC}>
-            Quarterly Performance — {activeDomain.label}
-          </SectionTitle>
-          <div style={{ height: 270 }}>
-            <ReactECharts option={qtrOption} style={{ height: '100%', width: '100%' }} />
-          </div>
-        </div>
+        <ChartCard title={`Quarterly Performance — ${activeDomain.label}`} accent={ACC} chartMeta={ACCOUNT_QUARTERLY_META} data={quarterlyData} height={270}>
+          <ReactECharts option={qtrOption} style={{ height: '100%', width: '100%' }} />
+        </ChartCard>
 
         {/* ─── Bottom Table: Yearly Performance ─── */}
         <div className="card card-padded">

@@ -23,6 +23,13 @@ import KPICard from '../../components/kpi/KPICard.jsx';
 import SectionTitle from '../../components/common/SectionTitle.jsx';
 import EmptyState from '../../components/common/EmptyState.jsx';
 import { Download } from 'lucide-react';
+import ChartCard from '../../components/customReport/ChartCard.jsx';
+import {
+  FINANCE_YEARLY_REALIZ_META,
+  FINANCE_YEARLY_BTA_META,
+  FINANCE_QTR_REALIZ_META,
+  FINANCE_QTR_BTA_META,
+} from '../../components/customReport/metadata/financeMeta.js';
 
 const ACCENT = 'finance-bta-accent';
 const FYS    = ['FY23', 'FY24', 'FY25', 'FY26', 'FY27'];
@@ -431,34 +438,22 @@ export default function RealizationBta() {
 
       {/* Yearly charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>Yearly Realization Trend</SectionTitle>
-          <div style={{ height: 260 }}>
-            <YearlyRealizChart data={yearlyRealiz} />
-          </div>
-        </div>
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>Yearly BTA Trend</SectionTitle>
-          <div style={{ height: 260 }}>
-            <YearlyBTAChart data={yearlyBTA} />
-          </div>
-        </div>
+        <ChartCard title="Yearly Realization Trend" accent={ACCENT} chartMeta={FINANCE_YEARLY_REALIZ_META} data={yearlyRealiz} height={260}>
+          <YearlyRealizChart data={yearlyRealiz} />
+        </ChartCard>
+        <ChartCard title="Yearly BTA Trend" accent={ACCENT} chartMeta={FINANCE_YEARLY_BTA_META} data={yearlyBTA} height={260}>
+          <YearlyBTAChart data={yearlyBTA} />
+        </ChartCard>
       </div>
 
       {/* Quarterly charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>Quarterly Realization Trend</SectionTitle>
-          <div style={{ height: 280 }}>
-            <QuarterlyRealizChart data={qtrRealiz} />
-          </div>
-        </div>
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>Quarterly Adjusted BTA Trend</SectionTitle>
-          <div style={{ height: 280 }}>
-            <QuarterlyBTAChart data={qtrBTA} />
-          </div>
-        </div>
+        <ChartCard title="Quarterly Realization Trend" accent={ACCENT} chartMeta={FINANCE_QTR_REALIZ_META} data={qtrRealiz} height={280}>
+          <QuarterlyRealizChart data={qtrRealiz} />
+        </ChartCard>
+        <ChartCard title="Quarterly Adjusted BTA Trend" accent={ACCENT} chartMeta={FINANCE_QTR_BTA_META} data={qtrBTA} height={280}>
+          <QuarterlyBTAChart data={qtrBTA} />
+        </ChartCard>
       </div>
 
       {/* BTA Tables with segment control */}

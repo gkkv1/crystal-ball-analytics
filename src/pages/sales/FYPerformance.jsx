@@ -15,6 +15,13 @@ import KPICard from '../../components/kpi/KPICard.jsx';
 import SectionTitle from '../../components/common/SectionTitle.jsx';
 import EmptyState from '../../components/common/EmptyState.jsx';
 import { Download } from 'lucide-react';
+import ChartCard from '../../components/customReport/ChartCard.jsx';
+import {
+  SALES_FY_TCV_META,
+  SALES_FY_NEW_DEAL_META,
+  SALES_QTR_TCV_META,
+  SALES_QTR_NEW_DEAL_META,
+} from '../../components/customReport/metadata/salesMeta.js';
 
 const ACC  = 'sales-accent';
 const fmtM = v => (v != null ? `$${Number(v).toFixed(1)}M` : '—');
@@ -187,34 +194,22 @@ export default function FYPerformance() {
 
       {/* FY Trend Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="card card-padded">
-          <SectionTitle accent={ACC}>FY TCV Trend ($Mn)</SectionTitle>
-          <div style={{ height: 280 }}>
-            <TCVBarLineChart data={fyTCV} xField="fy" barField1="tcvAOP" barLabel1="TCV AOP" barField2="tcvWon" barLabel2="TCV Won" lineField="achievedPct" lineLabel="% Achieved" barColor1={ct.colors.blue} barColor2={ct.colors.orange} lineColor={ct.colors.amber} />
-          </div>
-        </div>
-        <div className="card card-padded">
-          <SectionTitle accent={ACC}>FY New Deal TCV Trend ($Mn)</SectionTitle>
-          <div style={{ height: 280 }}>
-            <TCVBarLineChart data={fyND} xField="fy" barField1="newDealAOP" barLabel1="ND AOP" barField2="newDealWon" barLabel2="ND Won" lineField="achievedPct" lineLabel="% Achieved ND" barColor1={ct.colors.teal} barColor2={ct.colors.violet} lineColor={ct.colors.amber} />
-          </div>
-        </div>
+        <ChartCard title="FY TCV Trend ($Mn)" accent={ACC} chartMeta={SALES_FY_TCV_META} data={fyTCV} height={280}>
+          <TCVBarLineChart data={fyTCV} xField="fy" barField1="tcvAOP" barLabel1="TCV AOP" barField2="tcvWon" barLabel2="TCV Won" lineField="achievedPct" lineLabel="% Achieved" barColor1={ct.colors.blue} barColor2={ct.colors.orange} lineColor={ct.colors.amber} />
+        </ChartCard>
+        <ChartCard title="FY New Deal TCV Trend ($Mn)" accent={ACC} chartMeta={SALES_FY_NEW_DEAL_META} data={fyND} height={280}>
+          <TCVBarLineChart data={fyND} xField="fy" barField1="newDealAOP" barLabel1="ND AOP" barField2="newDealWon" barLabel2="ND Won" lineField="achievedPct" lineLabel="% Achieved ND" barColor1={ct.colors.teal} barColor2={ct.colors.violet} lineColor={ct.colors.amber} />
+        </ChartCard>
       </div>
 
       {/* Quarterly Trend Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="card card-padded">
-          <SectionTitle accent={ACC}>Quarterly TCV Trend ($Mn)</SectionTitle>
-          <div style={{ height: 280 }}>
-            <TCVBarLineChart data={qtrTCV.slice(-12)} xField="label" barField1="tcvAOP" barLabel1="TCV AOP" barField2="tcvWon" barLabel2="TCV Won" lineField="achievedPct" lineLabel="% Achieved" barColor1={ct.colors.blue} barColor2={ct.colors.orange} lineColor={ct.colors.amber} />
-          </div>
-        </div>
-        <div className="card card-padded">
-          <SectionTitle accent={ACC}>Quarterly New Deal TCV Trend ($Mn)</SectionTitle>
-          <div style={{ height: 280 }}>
-            <TCVBarLineChart data={qtrND.slice(-12)} xField="label" barField1="newDealAOP" barLabel1="ND AOP" barField2="newDealWon" barLabel2="ND Won" lineField="achievedPct" lineLabel="% Achieved ND" barColor1={ct.colors.teal} barColor2={ct.colors.violet} lineColor={ct.colors.amber} />
-          </div>
-        </div>
+        <ChartCard title="Quarterly TCV Trend ($Mn)" accent={ACC} chartMeta={SALES_QTR_TCV_META} data={qtrTCV} height={280}>
+          <TCVBarLineChart data={qtrTCV.slice(-12)} xField="label" barField1="tcvAOP" barLabel1="TCV AOP" barField2="tcvWon" barLabel2="TCV Won" lineField="achievedPct" lineLabel="% Achieved" barColor1={ct.colors.blue} barColor2={ct.colors.orange} lineColor={ct.colors.amber} />
+        </ChartCard>
+        <ChartCard title="Quarterly New Deal TCV Trend ($Mn)" accent={ACC} chartMeta={SALES_QTR_NEW_DEAL_META} data={qtrND} height={280}>
+          <TCVBarLineChart data={qtrND.slice(-12)} xField="label" barField1="newDealAOP" barLabel1="ND AOP" barField2="newDealWon" barLabel2="ND Won" lineField="achievedPct" lineLabel="% Achieved ND" barColor1={ct.colors.teal} barColor2={ct.colors.violet} lineColor={ct.colors.amber} />
+        </ChartCard>
       </div>
 
       {/* Cluster Table */}

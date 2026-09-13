@@ -6,6 +6,9 @@ import { useDashboardFilters } from '../context/DashboardFilterContext.jsx';
 import {
   calculateKPIs,
   getMultiYearBreakdown,
+  getAnnualPerformance,
+  getAOPYoYTrend,
+  getQuarterlyPerformance,
 } from '../utils/calculations.js';
 import FilterBar from '../components/layout/FilterBar.jsx';
 import KPICard from '../components/kpi/KPICard.jsx';
@@ -16,6 +19,8 @@ import PerformanceTable from '../components/tables/PerformanceTable.jsx';
 import SectionTitle from '../components/common/SectionTitle.jsx';
 import SmartInsights from '../components/common/SmartInsights.jsx';
 import EmptyState from '../components/common/EmptyState.jsx';
+import ChartCard from '../components/customReport/ChartCard.jsx';
+import { REVENUE_FY_META, REVENUE_AOP_YOY_META, REVENUE_QUARTERLY_META } from '../components/customReport/metadata/revenueMeta.js';
 
 // View accent = Blue
 const ACCENT = 'annual-accent';
@@ -37,6 +42,11 @@ export default function AnnualPerformance() {
     () => getMultiYearBreakdown(allData, filters, 'groupClient', 'groupClient'),
     [allData, filters]
   );
+
+  // Data snapshots for Visual Explorer
+  const fyChartData = useMemo(() => getAnnualPerformance(allData, filters), [allData, filters]);
+  const aopYoYData  = useMemo(() => getAOPYoYTrend(allData, filters), [allData, filters]);
+  const qtrData     = useMemo(() => getQuarterlyPerformance(allData, filters), [allData, filters]);
 
   return (
     <div className="flex flex-col gap-5 p-5 fade-in overflow-auto">
@@ -61,27 +71,18 @@ export default function AnnualPerformance() {
 
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>FY Revenue Performance</SectionTitle>
-          <div style={{ height: 260 }}>
-            <FYPerformanceChart />
-          </div>
-        </div>
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>AOP & YoY Trend</SectionTitle>
-          <div style={{ height: 260 }}>
-            <AOPYoYChart />
-          </div>
-        </div>
+        <ChartCard title="FY Revenue Performance" accent={ACCENT} chartMeta={REVENUE_FY_META} data={fyChartData} height={260}>
+          <FYPerformanceChart />
+        </ChartCard>
+        <ChartCard title="AOP & YoY Trend" accent={ACCENT} chartMeta={REVENUE_AOP_YOY_META} data={aopYoYData} height={260}>
+          <AOPYoYChart />
+        </ChartCard>
       </div>
 
       {/* Quarterly Performance chart */}
-      <div className="card card-padded">
-        <SectionTitle accent={ACCENT}>Quarterly Performance — All Fiscal Years</SectionTitle>
-        <div style={{ height: 280 }}>
-          <QuarterlyMixChart />
-        </div>
-      </div>
+      <ChartCard title="Quarterly Performance — All Fiscal Years" accent={ACCENT} chartMeta={REVENUE_QUARTERLY_META} data={qtrData} height={280}>
+        <QuarterlyMixChart />
+      </ChartCard>
 
       {/* Cluster Table */}
       <div className="card card-padded">

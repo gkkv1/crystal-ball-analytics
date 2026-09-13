@@ -20,6 +20,8 @@ import EmptyState from '../components/common/EmptyState.jsx';
 import { formatNumber, formatPct, getDeltaClass } from '../utils/formatters.js';
 import { Search, Download } from 'lucide-react';
 import clsx from 'clsx';
+import ChartCard from '../components/customReport/ChartCard.jsx';
+import { REVENUE_CUR_QTR_META } from '../components/customReport/metadata/revenueMeta.js';
 
 const ACCENT = 'curqtr-accent';
 
@@ -138,12 +140,9 @@ export default function CurrentQuarterAnalysis() {
       {/* Hero layout: chart left, KPI panel right */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Quarterly Performance chart — 2/3 width */}
-        <div className="card card-padded lg:col-span-2">
-          <SectionTitle accent={ACCENT}>Quarterly Performance — All Projections</SectionTitle>
-          <div style={{ height: 280 }}>
-            <CurQtrCompareChart />
-          </div>
-        </div>
+        <ChartCard title="Quarterly Performance — All Projections" accent={ACCENT} chartMeta={REVENUE_CUR_QTR_META} data={clusterData} height={280} className="lg:col-span-2">
+          <CurQtrCompareChart />
+        </ChartCard>
 
         {/* KPI panel — 1/3 width */}
         <div className="flex flex-col gap-3">

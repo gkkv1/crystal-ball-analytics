@@ -8,7 +8,7 @@ import FYPerformance from './sales/FYPerformance.jsx';
 import QuarterlyPerformance from './sales/QuarterlyPerformance.jsx';
 import CurrentQuarterPerformance from './sales/CurrentQuarterPerformance.jsx';
 import SalesWeeklyTrend from './sales/SalesWeeklyTrend.jsx';
-import { Home, TrendingUp } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 
 const TABS = [
   { id: 'fy',        label: 'FY Performance'           },
@@ -33,7 +33,7 @@ export default function SalesDashboard({ onNavigate }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
       {/* Header */}
-      <Header moduleLabel="Sales Performance" />
+      <Header moduleLabel="Sales Performance" onHome={() => onNavigate('landing')} showHome={true} />
 
       {/* Tab nav — same dark gradient style as Revenue / Finance */}
       <nav style={{
@@ -47,24 +47,6 @@ export default function SalesDashboard({ onNavigate }) {
         boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
         flexWrap: 'wrap',
       }}>
-        {/* Back to landing */}
-        <button
-          onClick={() => onNavigate('landing')}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 5,
-            color: 'rgba(255,255,255,0.55)', background: 'none',
-            border: 'none', cursor: 'pointer', fontSize: '0.75rem',
-            fontWeight: 600, padding: '10px 12px 10px 4px',
-            borderRight: '1px solid rgba(255,255,255,0.1)',
-            marginRight: 8, transition: 'color 0.15s ease',
-          }}
-          onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
-          onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.55)'}
-        >
-          <Home style={{ width: 13, height: 13 }} />
-          Home
-        </button>
-
         {TABS.map(tab => (
           <button
             key={tab.id}

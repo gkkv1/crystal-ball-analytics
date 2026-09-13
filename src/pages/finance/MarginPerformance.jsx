@@ -18,6 +18,8 @@ import SectionTitle from '../../components/common/SectionTitle.jsx';
 import EmptyState from '../../components/common/EmptyState.jsx';
 import { Download } from 'lucide-react';
 import clsx from 'clsx';
+import ChartCard from '../../components/customReport/ChartCard.jsx';
+import { FINANCE_MARGIN_META, FINANCE_COST_PCT_META } from '../../components/customReport/metadata/financeMeta.js';
 
 const ACCENT = 'finance-margin-accent';
 const fmt  = (v, d = 1) => (v ?? 0).toFixed(d);
@@ -352,18 +354,12 @@ export default function MarginPerformance() {
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>Revenue &amp; Gross Margin % by Fiscal Year</SectionTitle>
-          <div style={{ height: 280 }}>
-            <RevenueGMChart data={marginByFY} />
-          </div>
-        </div>
-        <div className="card card-padded">
-          <SectionTitle accent={ACCENT}>Cost as % of Revenue by Fiscal Year</SectionTitle>
-          <div style={{ height: 280 }}>
-            <CostPctChart data={costByFY} />
-          </div>
-        </div>
+        <ChartCard title="Revenue &amp; Gross Margin % by Fiscal Year" accent={ACCENT} chartMeta={FINANCE_MARGIN_META} data={marginByFY} height={280}>
+          <RevenueGMChart data={marginByFY} />
+        </ChartCard>
+        <ChartCard title="Cost as % of Revenue by Fiscal Year" accent={ACCENT} chartMeta={FINANCE_COST_PCT_META} data={costByFY} height={280}>
+          <CostPctChart data={costByFY} />
+        </ChartCard>
       </div>
 
       {/* Cluster Wise Table */}
