@@ -445,7 +445,7 @@ function DegContent() {
 /* ═══════════════════════════════════════════════════════════════════════════
    DEG DASHBOARD SHELL
 ═══════════════════════════════════════════════════════════════════════════ */
-export default function DegDashboard({ onNavigate }) {
+export default function DegDashboard({ onNavigate, onAiOpen, aiOpen }) {
   return (
     <DegFilterProvider>
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
@@ -454,6 +454,8 @@ export default function DegDashboard({ onNavigate }) {
           onHome={() => onNavigate('landing')}
           showHome={true}
           moduleLabel="DEG Performance"
+          onAiOpen={onAiOpen}
+          aiOpen={aiOpen}
         />
 
         {/* Nav strip — minimal, just Home button since single view */}

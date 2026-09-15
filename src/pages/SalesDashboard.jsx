@@ -17,7 +17,7 @@ const TABS = [
   { id: 'weekly',    label: 'Weekly Trend Analysis'     },
 ];
 
-export default function SalesDashboard({ onNavigate }) {
+export default function SalesDashboard({ onNavigate, onAiOpen, aiOpen }) {
   const [activeTab, setActiveTab] = useState('fy');
 
   const renderTab = () => {
@@ -33,7 +33,7 @@ export default function SalesDashboard({ onNavigate }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
       {/* Header */}
-      <Header moduleLabel="Sales Performance" onHome={() => onNavigate('landing')} showHome={true} />
+      <Header moduleLabel="Sales Performance" onHome={() => onNavigate('landing')} showHome={true} onAiOpen={onAiOpen} aiOpen={aiOpen} />
 
       {/* Tab nav — same dark gradient style as Revenue / Finance */}
       <nav style={{

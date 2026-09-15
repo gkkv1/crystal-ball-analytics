@@ -1,7 +1,7 @@
 // src/pages/LandingPage.jsx
 // Crystal Ball — Executive Module Launchpad
 // All 6 module cards open a right-side drawer on click
-// Revenue drawer has live KPI preview + Enter Dashboard CTA
+// Revenue drawer has live KPI preview + Top Navigation CTA
 // Inactive drawers show planned features
 
 import { useState, useEffect } from 'react';
@@ -30,7 +30,7 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 import { useTheme } from '../context/ThemeContext.jsx';
-import TCSLogo from '../assets/TCSLogo.png';
+// import TCSLogo from '../assets/TCSLogo.png';
 
 /* ─── Module definitions ────────────────────────────────────────────────── */
 const MODULES = [
@@ -57,7 +57,7 @@ const MODULES = [
         { icon: PieChart, label: 'Current Quarter', desc: 'Live projection vs target matrix' },
         { icon: Activity, label: 'Weekly Trend', desc: 'Week-by-week run-rate analysis' },
       ],
-      cta: 'Enter Revenue Dashboard',
+      cta: 'Revenue Dashboard',
     },
   },
   {
@@ -81,7 +81,7 @@ const MODULES = [
         { icon: BarChart3, label: 'Margin Performance', desc: 'Revenue, GM%, Cost % by FY & cluster' },
         { icon: TrendingUp, label: 'Realization & BTA', desc: 'Yearly/quarterly realization & BTA trends' },
       ],
-      cta: 'Enter Finance Dashboard',
+      cta: 'Finance Dashboard',
     },
   },
   {
@@ -107,7 +107,7 @@ const MODULES = [
         { icon: Target, label: 'Current Qtr Performance', desc: 'Live quarter achievement & stage mix' },
         { icon: Activity, label: 'Weekly Trend Analysis', desc: 'Week-by-week run-rate & pipeline trend' },
       ],
-      cta: 'Enter Sales Dashboard',
+      cta: 'Sales Dashboard',
     },
   },
   {
@@ -133,7 +133,7 @@ const MODULES = [
         { icon: BarChart3, label: 'CSI by Sub Unit', desc: 'Sub-unit CSI performance breakdown' },
         { icon: Layers, label: 'CSI Detail Table', desc: 'Hierarchical table with all CSI metrics' },
       ],
-      cta: 'Enter DEG Dashboard',
+      cta: 'DEG Dashboard',
     },
   },
   {
@@ -159,7 +159,7 @@ const MODULES = [
         { icon: Activity, label: 'Sub Unit Wise Trend', desc: 'Top sub-units comparative headcount trends' },
         { icon: Layers, label: 'BG Cluster & Account Tables', desc: 'Detailed weekly cross-tabulation matrices' },
       ],
-      cta: 'Enter RMG Dashboard',
+      cta: 'RMG Dashboard',
     },
   },
   {
@@ -185,7 +185,7 @@ const MODULES = [
         { icon: Layers, label: 'Yearly Performance Matrix', desc: 'Sub-unit multi-year AOP, actuals, and YoY trends' },
         { icon: Calendar, label: 'Visit Detail Records', desc: 'Detailed meeting records with attendee coverage' },
       ],
-      cta: 'Enter Account Dashboard',
+      cta: 'Account Dashboard',
     },
   },
 ];
@@ -257,21 +257,22 @@ function Drawer({ mod, onClose, onEnter, isDark }) {
           transform: mounted ? 'translateX(0)' : 'translateX(100%)',
           transition: 'transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)',
           display: 'flex', flexDirection: 'column',
-          overflowY: 'auto',
+          overflowY: 'hidden',
         }}
       >
-        {/* Drawer header */}
+        {/* Drawer header - Pinned at top so navigation button is always immediately visible */}
         <div
           style={{
-            padding: '24px 24px 20px',
+            padding: '24px 24px 18px',
             borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : '#F1F5F9'}`,
             background: isDark ? '#0D1E38' : '#F8FAFC',
+            flexShrink: 0,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{
-                width: 48, height: 48, borderRadius: 14,
+                width: 46, height: 46, borderRadius: 14,
                 background: isDark ? c.iconBgD : c.iconBg,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
@@ -306,13 +307,45 @@ function Drawer({ mod, onClose, onEnter, isDark }) {
               <X style={{ width: 16, height: 16 }} />
             </button>
           </div>
-          <p style={{ fontSize: 13, color: isDark ? '#94A3B8' : '#475569', lineHeight: 1.5 }}>
+
+          <p style={{ fontSize: 13, color: isDark ? '#94A3B8' : '#475569', lineHeight: 1.5, marginBottom: 16 }}>
             {d.subheadline}
           </p>
+
+          {/* Primary Navigation Button - Placed at top so user NEVER has to scroll! */}
+          {mod.active ? (
+            <button
+              onClick={onEnter}
+              style={{
+                width: '100%', padding: '12px 20px', borderRadius: 12, border: 'none', cursor: 'pointer',
+                background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+                color: '#FFFFFF', fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
+                transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(37,99,235,0.45)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(37,99,235,0.3)'; }}
+            >
+              <span>{d.cta}</span>
+              <ArrowRight style={{ width: 16, height: 16 }} />
+            </button>
+          ) : (
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 10,
+              background: isDark ? 'rgba(255,255,255,0.04)' : '#F8FAFC',
+              border: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : '#E2E8F0'}`,
+            }}>
+              <Lock style={{ width: 15, height: 15, color: isDark ? '#475569' : '#94A3B8', flexShrink: 0 }} />
+              <span style={{ fontSize: 12, color: isDark ? '#64748B' : '#94A3B8' }}>
+                This module is in development. Updates coming soon.
+              </span>
+            </div>
+          )}
         </div>
 
-        {/* Drawer content */}
-        <div style={{ flex: 1, padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {/* Drawer content - Scrollable independent area */}
+        <div style={{ flex: 1, padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 20, overflowY: 'auto' }}>
 
           {/* Revenue: live KPI cards */}
           {mod.active && d.kpis && (
@@ -339,21 +372,37 @@ function Drawer({ mod, onClose, onEnter, isDark }) {
             </div>
           )}
 
-          {/* Revenue: dashboard views */}
+          {/* Dashboard views */}
           {mod.active && d.views && (
             <div>
               <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: isDark ? '#475569' : '#94A3B8', marginBottom: 10 }}>
-                4 Analytical Views Included
+                Analytical Views Included
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {d.views.map((v) => {
                   const VIcon = v.icon;
                   return (
-                    <div key={v.label} style={{
-                      display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 10,
-                      background: isDark ? 'rgba(255,255,255,0.04)' : '#F8FAFC',
-                      border: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : '#E2E8F0'}`,
-                    }}>
+                    <div
+                      key={v.label}
+                      onClick={onEnter}
+                      role="button"
+                      tabIndex={0}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 10,
+                        background: isDark ? 'rgba(255,255,255,0.04)' : '#F8FAFC',
+                        border: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : '#E2E8F0'}`,
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = c.icon;
+                        e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.07)' : '#F1F5F9';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.07)' : '#E2E8F0';
+                        e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.04)' : '#F8FAFC';
+                      }}
+                    >
                       <div style={{
                         width: 32, height: 32, borderRadius: 8, flexShrink: 0,
                         background: isDark ? c.iconBgD : c.iconBg,
@@ -361,7 +410,7 @@ function Drawer({ mod, onClose, onEnter, isDark }) {
                       }}>
                         <VIcon style={{ width: 15, height: 15, color: c.icon }} />
                       </div>
-                      <div>
+                      <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 13, fontWeight: 600, color: isDark ? '#E2E8F0' : '#0F172A' }}>{v.label}</div>
                         <div style={{ fontSize: 11, color: isDark ? '#64748B' : '#94A3B8', marginTop: 1 }}>{v.desc}</div>
                       </div>
@@ -413,42 +462,6 @@ function Drawer({ mod, onClose, onEnter, isDark }) {
                   );
                 })}
               </div>
-            </div>
-          )}
-        </div>
-
-        {/* Drawer footer */}
-        <div style={{
-          padding: '16px 24px',
-          borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : '#F1F5F9'}`,
-        }}>
-          {mod.active ? (
-            <button
-              onClick={onEnter}
-              style={{
-                width: '100%', padding: '13px 20px', borderRadius: 12, border: 'none', cursor: 'pointer',
-                background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
-                color: '#FFFFFF', fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
-                transition: 'transform 0.15s ease, box-shadow 0.15s ease',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(37,99,235,0.4)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(37,99,235,0.3)'; }}
-            >
-              {d.cta}
-              <ArrowRight style={{ width: 16, height: 16 }} />
-            </button>
-          ) : (
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', borderRadius: 10,
-              background: isDark ? 'rgba(255,255,255,0.04)' : '#F8FAFC',
-              border: `1px solid ${isDark ? 'rgba(255,255,255,0.07)' : '#E2E8F0'}`,
-            }}>
-              <Lock style={{ width: 15, height: 15, color: isDark ? '#475569' : '#94A3B8', flexShrink: 0 }} />
-              <span style={{ fontSize: 13, color: isDark ? '#64748B' : '#94A3B8' }}>
-                This module is in development. Updates coming soon.
-              </span>
             </div>
           )}
         </div>
@@ -581,16 +594,16 @@ export default function LandingPage({ onNavigate }) {
         {/* Left branding lockup: TCS Logo + IAE Division + Divider + Crystal Ball */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           {/* TCS Logo */}
-          <div style={{ background: 'rgba(255,255,255,0.97)', padding: '4px 10px', borderRadius: 8, boxShadow: '0 1px 4px rgba(0,0,0,0.18)' }}>
+          {/* <div style={{ background: 'rgba(255,255,255,0.97)', padding: '4px 10px', borderRadius: 8, boxShadow: '0 1px 4px rgba(0,0,0,0.18)' }}>
             <img src={TCSLogo} alt="TCS" style={{ height: 26, width: 'auto', display: 'block' }} />
-          </div>
+          </div> */}
 
           {/* Division Name */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.9)' }}>
+            <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.9)' }}>
               Industrial Autonomy
             </span>
-            <span style={{ fontSize: 8.5, letterSpacing: '0.05em', color: '#93C5FD' }}>
+            <span style={{ fontSize: 12, letterSpacing: '0.05em', color: '#93C5FD' }}>
               &amp; Engineering Division
             </span>
           </div>

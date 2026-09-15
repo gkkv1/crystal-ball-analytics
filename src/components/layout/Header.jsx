@@ -2,12 +2,12 @@
 // Crystal Ball — Application Header
 // Left: TCS logo from assets | Center: Title | Right: Theme toggle, Expo Mode, Home
 
-import { Monitor, Home, Sun, Moon } from 'lucide-react';
+import { Monitor, Home, Sun, Moon, Sparkles } from 'lucide-react';
 import clsx from 'clsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
-import TCSLogo from '../../assets/TCSLogo.png';
+// import TCSLogo from '../../assets/TCSLogo.png';
 
-export default function Header({ onHome, showHome = true, presentationMode, onTogglePresentation, moduleLabel = 'Revenue Performance' }) {
+export default function Header({ onHome, showHome = true, presentationMode, onTogglePresentation, moduleLabel = 'Revenue Performance', onAiOpen, aiOpen }) {
   const { isDark, toggleTheme } = useTheme();
 
   return (
@@ -22,7 +22,7 @@ export default function Header({ onHome, showHome = true, presentationMode, onTo
     >
       {/* LEFT — TCS Logo */}
       <div className="flex items-center gap-3 min-w-[160px]">
-        <div
+        {/* <div
           className="flex items-center justify-center rounded-lg"
           style={{
             background: 'rgba(255,255,255,0.97)',
@@ -35,17 +35,17 @@ export default function Header({ onHome, showHome = true, presentationMode, onTo
             alt="TCS — Tata Consultancy Services"
             style={{ height: 26, width: 'auto', display: 'block' }}
           />
-        </div>
+        </div> */}
         <div className="hidden md:flex flex-col">
           <span
             className="text-white/90 font-semibold"
-            style={{ fontSize: 9.5, letterSpacing: '0.07em', textTransform: 'uppercase' }}
+            style={{ fontSize: 14, letterSpacing: '0.07em', textTransform: 'uppercase' }}
           >
             Industrial Autonomy
           </span>
           <span
             className="text-blue-300"
-            style={{ fontSize: 8.5, letterSpacing: '0.05em' }}
+            style={{ fontSize: 12, letterSpacing: '0.05em' }}
           >
             &amp; Engineering Division
           </span>
@@ -79,8 +79,40 @@ export default function Header({ onHome, showHome = true, presentationMode, onTo
           }
         </button>
 
+        {/* AI Intelligence Hub */}
+        {onAiOpen && (
+          <button
+            id="ai-hub-trigger"
+            onClick={onAiOpen}
+            title="Open AI Intelligence Hub"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+            style={{
+              background: aiOpen
+                ? 'rgba(37,99,235,0.85)'
+                : 'linear-gradient(135deg, rgba(37,99,235,0.25), rgba(99,102,241,0.2))',
+              color: 'white',
+              border: '1px solid rgba(99,102,241,0.5)',
+              position: 'relative',
+            }}
+          >
+            <Sparkles className="w-3.5 h-3.5" style={{ color: '#A5B4FC' }} />
+            <span>AI</span>
+            {/* Pulsing dot indicator */}
+            {!aiOpen && (
+              <span style={{
+                position: 'absolute',
+                top: 4, right: 4,
+                width: 5, height: 5,
+                borderRadius: '50%',
+                background: '#10B981',
+                animation: 'ai-pulse 2s ease-in-out infinite',
+              }} />
+            )}
+          </button>
+        )}
+
         {/* Presentation Mode */}
-        <button
+        {/* <button
           onClick={onTogglePresentation}
           title={presentationMode ? 'Exit Presentation Mode' : 'Presentation Mode'}
           className={clsx(
@@ -92,7 +124,7 @@ export default function Header({ onHome, showHome = true, presentationMode, onTo
         >
           <Monitor className="w-3.5 h-3.5" />
           {presentationMode ? 'Exit Expo' : 'Expo Mode'}
-        </button>
+        </button> */}
 
         {/* Home */}
         {showHome && (

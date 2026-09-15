@@ -624,7 +624,7 @@ function RmgContent() {
 /* ═══════════════════════════════════════════════════════════════════════════
    RMG DASHBOARD SHELL
 ═══════════════════════════════════════════════════════════════════════════ */
-export default function RmgDashboard({ onNavigate }) {
+export default function RmgDashboard({ onNavigate, onAiOpen, aiOpen }) {
   return (
     <RmgFilterProvider>
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
@@ -633,6 +633,8 @@ export default function RmgDashboard({ onNavigate }) {
           onHome={() => onNavigate('landing')}
           showHome={true}
           moduleLabel="RMG Performance"
+          onAiOpen={onAiOpen}
+          aiOpen={aiOpen}
         />
 
         {/* Sub Navigation strip for single WON-HC Report view */}

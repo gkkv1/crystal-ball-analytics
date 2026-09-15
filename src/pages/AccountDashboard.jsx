@@ -68,7 +68,7 @@ function LoadingFallback() {
   );
 }
 
-export default function AccountDashboard({ onNavigate }) {
+export default function AccountDashboard({ onNavigate, onAiOpen, aiOpen }) {
   const [activeTab, setActiveTab] = useState('performance');
 
   return (
@@ -79,6 +79,8 @@ export default function AccountDashboard({ onNavigate }) {
           onHome={() => onNavigate('landing')}
           showHome={true}
           moduleLabel="Account Performance"
+          onAiOpen={onAiOpen}
+          aiOpen={aiOpen}
         />
 
         {/* Tab Navigation: EXACTLY TWO TABS */}

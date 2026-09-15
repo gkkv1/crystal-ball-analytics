@@ -63,7 +63,7 @@ function LoadingFallback() {
   );
 }
 
-export default function FinanceDashboard({ onHome, presentationMode, onTogglePresentation }) {
+export default function FinanceDashboard({ onHome, presentationMode, onTogglePresentation, onAiOpen, aiOpen }) {
   const [activeTab, setActiveTab] = useState('margin');
   const ActivePage = activeTab === 'margin' ? MarginPerformance : RealizationBta;
 
@@ -75,6 +75,8 @@ export default function FinanceDashboard({ onHome, presentationMode, onTogglePre
         presentationMode={presentationMode}
         onTogglePresentation={onTogglePresentation}
         moduleLabel="Finance Performance"
+        onAiOpen={onAiOpen}
+        aiOpen={aiOpen}
       />
       <FinanceTabNav activeTab={activeTab} onTabChange={setActiveTab} />
       <div className="flex-1 overflow-auto" style={{ background: 'var(--bg-base)' }}>
